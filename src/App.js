@@ -10,18 +10,18 @@ class App extends Component {
     this.state = {
       task: {
         title: '',
-        id: Date.now()
+        id: Date.now(),
       },
       tasks: []
     }
   }
 
   onTaskChange = (e) => {
-    const {task} = this.state
+    const {task, tasks} = this.state
     this.setState({
       task: {
         id: Date.now(),
-        title: e.target.value
+        title: e.target.value,
       }
     })
   }
@@ -37,16 +37,27 @@ class App extends Component {
     }
   }
 
+  onDeleteTask = (id) => {
+    const {tasks} = this.state
+    const filteredTasks = tasks.filter((task) => {
+      return task.id !== id
+    })
+    this.setState({tasks: filteredTasks})
+  }
+
   render() {
     const {task, tasks} = this.state
     return(
       <div className='App'>
         <h1>Task App</h1>
         <form onSubmit={this.onTaskSubmit}>
-          <input type='text' value={task.title} onChange={this.onTaskChange}/>
+          <input type='text' 
+            value={task.title} 
+            onChange={this.onTaskChange}
+          />
           <input type='submit' value='New Task'/>
         </form>
-        <Overview tasks={tasks}/>
+        <Overview tasks={tasks} onDeleteTask={this.onDeleteTask}/>
       </div>
     )
   }
