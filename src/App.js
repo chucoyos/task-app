@@ -2,47 +2,41 @@ import './App.css';
 import { Component } from 'react';
 import Overview from './components/Overview'
 
-
 class App extends Component {
-
   constructor(props) {
     super(props)
     this.state = {
+      tasks: [],
       task: {
-        title: '',
         id: Date.now(),
-      },
-      tasks: []
+        title: ''
+      }
     }
   }
 
   onTaskChange = (e) => {
-    const {task, tasks} = this.state
-    this.setState({
-      task: {
-        id: Date.now(),
-        title: e.target.value,
-      }
-    })
+    const {task} = this.state
+    task.title = e.target.value
+    task.id = Date.now()
+    this.setState({task: task})
   }
-
   onTaskSubmit = (e) => {
     const {tasks, task} = this.state
     e.preventDefault()
-    if(task.title !== ''){
-      this.setState(
-        {tasks: [...tasks, task],
-        task: {title: ''}}
-        )
-    }
+    this.setState({tasks: [...tasks, task], task: {title: ''}})
   }
 
-  onDeleteTask = (id) => {
+  onTaskDestroy = (id) => {
     const {tasks} = this.state
-    const filteredTasks = tasks.filter((task) => {
-      return task.id !== id
-    })
+    const filteredTasks = tasks.filter(task => task.id !== id)
     this.setState({tasks: filteredTasks})
+  }
+
+  onTaskEdit = (id) => {
+    const {tasks} = this.state
+    const task = tasks.find(task => task.id === id)
+    const filteredTasks = tasks.filter(task => task.id !== id)
+    this.setState({tasks: filteredTasks, task: task})
   }
 
   render() {
@@ -51,13 +45,13 @@ class App extends Component {
       <div className='App'>
         <h1>Task App</h1>
         <form onSubmit={this.onTaskSubmit}>
-          <input type='text' 
-            value={task.title} 
-            onChange={this.onTaskChange}
-          />
-          <input type='submit' value='New Task'/>
+          <input type='text' value={task.title} onChange={this.onTaskChange}/>
+          <input type='submit' value='Create Task'/>
         </form>
-        <Overview tasks={tasks} onDeleteTask={this.onDeleteTask}/>
+        <Overview 
+          tasks={tasks} 
+          onTaskDestroy={this.onTaskDestroy} 
+          onTaskEdit={this.onTaskEdit} />
       </div>
     )
   }
