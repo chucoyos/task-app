@@ -1,20 +1,16 @@
 const Overview = (props) => {
-  const {tasks, onTaskDestroy, onTaskEdit} = props
+  const {tasks, onTaskDelete, onTaskEdit} = props
   return(
     <div>
       <h2>Tasks</h2>
       <ol>
         {
-          tasks.map(task => {
+          tasks.map((task) => {
             return(
               <li key={task.id}>
-                {task.title} 
-                <button onClick={() => onTaskDestroy(task.id)}>
-                  Delete Task
-                </button>
-                <button onClick={() => onTaskEdit(task.id)}>
-                  Edit Task
-                </button>
+                {task.title}
+                <button onClick={() => onTaskDelete(task.id)}>✗</button>
+                <button onClick={() => onTaskEdit(task.id)}>✎</button>
               </li>
             )
           })
