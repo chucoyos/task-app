@@ -9,8 +9,8 @@ const Overview = (props) => {
             return(
               <li key={task.id}>
                 {task.title}
-                <button onClick={() => onTaskDelete(task.id)}>✗</button>
-                <button onClick={() => onTaskEdit(task.id)}>✎</button>
+                <button onClick={() => onTaskDelete(task.id)}>Delete</button>
+                <button onClick={() => onTaskEdit(task.id)}>Edit</button>
               </li>
             )
           })

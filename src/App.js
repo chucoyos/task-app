@@ -33,10 +33,10 @@ const App = () => {
 
   return(
     <div className='App'>
-      <h1>Task App ✔ ⚂</h1>
+      <h1>Task App </h1>
       <form onSubmit={onTaskSubmit}>
         <input type='text' value={task.title} onChange={onTaskChange}/>
-        <input type='submit' value='✔'/>
+        <input type='submit' value='Add'/>
       </form>
       <Overview tasks={tasks} 
                 onTaskDelete={onTaskDelete}
